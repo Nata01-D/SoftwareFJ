@@ -1,17 +1,23 @@
 import logging
+from pathlib import Path
+
 from cliente import Cliente
 from reserva import Reserva
 from servicio import ReservaSala, AlquilerEquipo, Asesoria
 from excepciones import ErrorSistema, DatoInvalidoError, ClienteNoEncontradoError
 
-# Los eventos y errores se guardan en un archivo para revisar qué ocurrió.
+# Crear automáticamente la carpeta de registros.
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+# Guardar los eventos y errores del sistema.
 logging.basicConfig(
-    filename="logs/software_fj.log",
+    filename=str(LOG_DIR / "software_fj.log"),
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     encoding="utf-8"
 )
-
 
 class SistemaFJ:
     def __init__(self):
